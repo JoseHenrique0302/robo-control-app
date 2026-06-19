@@ -1,0 +1,22 @@
+name: robo_control_app
+description: App Android (Bluetooth Classico SPP) para controlar o robo seguidor de linha.
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+# OBS: estas dependencias só serão baixadas quando você rodar `flutter pub get`
+# (num Mac seu / autorizado). Nada foi baixado ao criar este arquivo.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bluetooth_serial: ^0.4.0   # Bluetooth Classico SPP/RFCOMM (Android)
+  flutter_joystick: ^0.0.4           # joystick virtual analogico
+  provider: ^6.1.2                   # gerencia de estado simples
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
