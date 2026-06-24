@@ -59,7 +59,7 @@ class RobotRepository {
   Future<bool?> requestEnable() => _btService.requestEnable();
 
   /// Solicita as permissões de runtime necessárias para usar Bluetooth.
-  Future<bool> requestBluetoothPermissions() =>
+  Future<BtPermissionResult> requestBluetoothPermissions() =>
       _btService.requestBluetoothPermissions();
 
   /// Conecta a um dispositivo. Emite estado via [connectionStateStream].

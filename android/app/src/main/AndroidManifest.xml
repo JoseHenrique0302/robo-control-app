@@ -5,8 +5,7 @@
 
     <!-- Android 12+ (API 31+) -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
-        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
 
     <!-- Android 11 e abaixo (API 30 e menor) -->
     <uses-permission android:name="android.permission.BLUETOOTH"
@@ -14,11 +13,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
         android:maxSdkVersion="30" />
 
-    <!-- Localizacao (necessaria para scan em Android 11 e abaixo) -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
-        android:maxSdkVersion="30" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
-        android:maxSdkVersion="30" />
+    <!-- Localizacao: o plugin flutter_bluetooth_serial exige ACCESS_FINE_LOCATION
+         em runtime mesmo no Android 12+. Por isso NAO usamos maxSdkVersion aqui
+         (senao a permissao some no Android 12+ e nao pode ser concedida) e NAO
+         usamos neverForLocation no BLUETOOTH_SCAN. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:label="Robô Control"

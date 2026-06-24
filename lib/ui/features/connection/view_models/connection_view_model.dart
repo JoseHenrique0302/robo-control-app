@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
 import 'package:robo_control_app/data/repositories/robot_repository.dart';
+import 'package:robo_control_app/data/services/bluetooth_service.dart';
 import 'package:robo_control_app/domain/models/connection_state.dart';
 
 /// ViewModel para a tela de conexão Bluetooth.
@@ -49,12 +50,12 @@ class ConnectionViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // No Android 12+ é preciso solicitar a permissão de runtime antes
-      // de tocar em qualquer API de Bluetooth.
-      final hasPermission = await _repository.requestBluetoothPermissions();
-      if (!hasPermission) {
-        _error = 'Permissão de Bluetooth negada. '
-            'Conceda a permissão nas configurações do app para continuar.';
+      // Permissões de runtime (BT + localização) e GPS ligado — exigidos pelo
+      // plugin/ Android antes de listar dispositivos Bluetooth.
+      final BtPermissionResult perm =
+          await _repository.requestBluetoothPermissions();
+      if (!perm.isReady) {
+        _error = perm.errorMessage;
         return;
       }
 
