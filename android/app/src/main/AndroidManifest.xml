@@ -1,26 +1,20 @@
-<!-- AndroidManifest.xml para o Robô Control App -->
-<!-- Localização: android/app/src/main/AndroidManifest.xml -->
-<!--
-  INSTRUÇÕES: Após rodar `flutter create . --platforms android`, SUBSTITUA
-  o AndroidManifest.xml gerado por este arquivo, ou adicione as permissões
-  de Bluetooth listadas abaixo ao manifest existente.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- ══ Permissões Bluetooth ══════════════════════════════════════ -->
-    
-    <!-- Android 12+ (API 31+) — Bluetooth Connect & Scan -->
+    <!-- Permissoes Bluetooth -->
+
+    <!-- Android 12+ (API 31+) -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
         android:usesPermissionFlags="neverForLocation" />
 
-    <!-- Android ≤ 11 (API 30 e abaixo) — Bluetooth legado -->
+    <!-- Android 11 e abaixo (API 30 e menor) -->
     <uses-permission android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
         android:maxSdkVersion="30" />
 
-    <!-- Localização (necessária para scan Bluetooth em Android ≤ 11) -->
+    <!-- Localizacao (necessaria para scan em Android 11 e abaixo) -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
         android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"
@@ -30,7 +24,7 @@
         android:label="Robô Control"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -40,25 +34,22 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            
-            <!-- Splash screen -->
+
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
-            
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        
-        <!-- Flutter embedding -->
+
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    
-    <!-- Queries for Bluetooth device discovery -->
+
     <queries>
         <intent>
             <action android:name="android.bluetooth.adapter.action.REQUEST_ENABLE" />

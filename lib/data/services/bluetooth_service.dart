@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// Serviço de baixo nível para Bluetooth Clássico SPP.
 ///
@@ -25,6 +26,22 @@ class BluetoothService {
 
   /// Solicita ligar o Bluetooth (abre dialog do sistema).
   Future<bool?> requestEnable() => _bt.requestEnable();
+
+  /// Solicita as permissões de runtime necessárias para usar Bluetooth
+  /// no Android 12+ (BLUETOOTH_CONNECT, BLUETOOTH_SCAN e localização).
+  ///
+  /// Retorna true apenas se [Permission.bluetoothConnect] for concedida,
+  /// que é a permissão exigida antes de chamar [requestEnable] ou
+  /// [getBondedDevices] em dispositivos com Android 12+.
+  Future<bool> requestBluetoothPermissions() async {
+    final statuses = await [
+      Permission.bluetoothConnect,
+      Permission.bluetoothScan,
+      Permission.location,
+    ].request();
+
+    return statuses[Permission.bluetoothConnect]?.isGranted ?? false;
+  }
 
   /// Conecta a um dispositivo via RFCOMM SPP.
   ///

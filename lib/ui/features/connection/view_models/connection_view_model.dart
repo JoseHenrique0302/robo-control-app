@@ -49,6 +49,15 @@ class ConnectionViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
+      // No Android 12+ é preciso solicitar a permissão de runtime antes
+      // de tocar em qualquer API de Bluetooth.
+      final hasPermission = await _repository.requestBluetoothPermissions();
+      if (!hasPermission) {
+        _error = 'Permissão de Bluetooth negada. '
+            'Conceda a permissão nas configurações do app para continuar.';
+        return;
+      }
+
       // Verifica se o BT está ligado
       final enabled = await _repository.isBluetoothEnabled;
       if (!enabled) {
