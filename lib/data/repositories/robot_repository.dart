@@ -126,7 +126,7 @@ class RobotRepository {
 
   void _send(String command) {
     if (_connection == null) return;
-    _btService.send(_connection!, command);
+    unawaited(_btService.send(_connection!, command));
   }
 
   /// Envia `MANUAL\n` — entra em modo manual.

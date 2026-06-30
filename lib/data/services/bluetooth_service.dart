@@ -66,10 +66,13 @@ class BluetoothService {
   /// Envia um comando ASCII para a conexão aberta.
   ///
   /// Adiciona `\n` automaticamente se [appendNewline] for true (padrão).
-  void send(BluetoothConnection connection, String command,
-      {bool appendNewline = true}) {
+  /// Aguarda o flush (`output.allSent`): sem isso, comandos curtos podiam
+  /// ficar bufferizados e nunca saírem de fato pela porta serial.
+  Future<void> send(BluetoothConnection connection, String command,
+      {bool appendNewline = true}) async {
     final data = appendNewline ? '$command\n' : command;
     connection.output.add(Uint8List.fromList(utf8.encode(data)));
+    await connection.output.allSent;
   }
 
   /// Retorna um stream de linhas completas (terminadas em \n) recebidas
